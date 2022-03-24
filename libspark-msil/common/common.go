@@ -4,14 +4,16 @@ import (
 	"net/http"
 	"github.com/go-playground/validator/v10"
 	"errors"
-	"Libraries/libspark-msil/constants"
-	"Libraries/libspark-msil/kafka"
+	"libspark-msil/constants"
+	"libspark-msil/kafka"
 	"github.com/gin-gonic/gin"
 	"log"
 	"fmt"
 )
 
-func SendBadRequest(c *gin.Context,err error,messageID string){
+
+
+func SendBadRequest(c *gin.Context,topic string,err error,messageID string){
 
 	log.Println("send bad request : ",err)
 	log.Println("--------------", err, "---------------")
@@ -23,32 +25,31 @@ func SendBadRequest(c *gin.Context,err error,messageID string){
 			out = MsgFormat(fe.Field(),fe.Tag())
 		}
 		c.JSON(http.StatusOK, gin.H{constants.ErrorCode:constants.KeyNotFound,constants.Message:out})
-		//		go kafka.SendLogsToKafka(constants.BadRequest , messageID ,c.Request.URL.Path , gin.H{constants.ErrorCode:constants.KeyNotFound, constants.Message:out})
+		go kafka.SendLogsToKafka(topic ,constants.BadRequest , messageID ,c.Request.URL.Path , gin.H{constants.ErrorCode:constants.KeyNotFound, constants.Message:out})
 
 	}
 }
 
-func SendDBUpdationError(c *gin.Context, msg string,messageID string){
+func SendDBUpdationError(c *gin.Context,topic string, msg string,messageID string){
 
 	c.JSON(http.StatusOK, gin.H{
 		constants.Status:  http.StatusInternalServerError,
 		constants.Message: msg,
 	})
-	//	go kafka.SendLogsToKafka(constants.DBUpdationError , messageID ,c.Request.URL.Path , gin.H{constants.Status:  http.StatusInternalServerError,constants.Message: msg})
+	go kafka.SendLogsToKafka(topic,constants.DBUpdationError , messageID ,c.Request.URL.Path , gin.H{constants.Status:  http.StatusInternalServerError,constants.Message: msg})
 
 }
-
-func SendDateVarificationMsg(c *gin.Context,messageID string){
+func SendDateVarificationMsg(c *gin.Context,topic string,messageID string){
 
 	c.JSON(http.StatusOK, gin.H{
 		constants.Status: http.StatusOK,
 		constants.Message: constants.EndDateVerificationMessage,
 	})
-	//	go kafka.SendLogsToKafka(constants.DateVarification , messageID ,c.Request.URL.Path , gin.H{constants.Status:  http.StatusOK, constants.Message:constants.EndDateVerificationMessage})
+	go kafka.SendLogsToKafka(topic,constants.DateVarification , messageID ,c.Request.URL.Path , gin.H{constants.Status:  http.StatusOK, constants.Message:constants.EndDateVerificationMessage})
 
 }
 
-func SendUnableToInitializeURL(c *gin.Context,err error,messageID string){
+func SendUnableToInitializeURL(c *gin.Context,topic string,err error,messageID string){
 
 	log.Println("unable to initialize presigned url",err)
 
@@ -56,7 +57,7 @@ func SendUnableToInitializeURL(c *gin.Context,err error,messageID string){
 		constants.StatusCode : constants.FailureCode,
 		constants.Msg  : constants.UnableToInitializeURL,
 	})
-	//	go kafka.SendLogsToKafka(constants.UnableToInitialize , messageID ,c.Request.URL.Path , gin.H{ constants.StatusCode : constants.FailureCode,constants.Msg  : constants.UnableToInitializeURL})
+	go kafka.SendLogsToKafka(topic,constants.UnableToInitialize , messageID ,c.Request.URL.Path , gin.H{ constants.StatusCode : constants.FailureCode,constants.Msg  : constants.UnableToInitializeURL})
 
 
 }
@@ -69,7 +70,7 @@ func MsgFormat(field string, tag string) string{
 	return ""
 }
 
-func ExceptionHandling(c *gin.Context,messageID string){
+func ExceptionHandling(c *gin.Context,topic string,messageID string){
 
 	if r := recover(); r != nil {
 		log.Printf("Exception: %v \n", r)
@@ -78,7 +79,7 @@ func ExceptionHandling(c *gin.Context,messageID string){
 			constants.ErrorCode: constants.Exception,
 			constants.ErrorMessage: msg,
 		})
-		//		go kafka.SendLogsToKafka(constants.ExceptionError , messageID ,c.Request.URL.Path , gin.H{ constants.ErrorCode: constants.Exception, constants.ErrorMessage: msg})
+		go kafka.SendLogsToKafka(topic,constants.ExceptionError , messageID ,c.Request.URL.Path , gin.H{ constants.ErrorCode: constants.Exception, constants.ErrorMessage: msg})
 
 	}
 }

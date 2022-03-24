@@ -5,7 +5,7 @@ import (
 	"os"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
-	"Libraries/libspark-msil/constants"
+	"libspark-msil/constants"
 )
 
 // Logger is the middleware which logs the requests

@@ -66,7 +66,7 @@ const(
 
 const(
 	KakfaServer = "localhost:9092"
-
+	Channel = "channel"
 	RequestReceived = "Request"
 	ResponseSend = "Response"
 	DB_Error = "DynamoDB error"
@@ -80,6 +80,11 @@ const(
 	PostedToKafka  = "Successfully posted to kafka"
 	KafkaConnectErrorMsg = "Kafka: Error initializing asyncProducer"
 	KafkaConnect  = "Initialized kafka asyncproducer"
+	BadRequest="Bad Request"
+        DBUpdationError="DB Updation Error"
+        DateVarification="Date Verification"
+        UnableToInitialize="Initialise URL Error"
+        ExceptionError="Exception case"
 )
 //timeout
 

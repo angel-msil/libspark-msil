@@ -4,7 +4,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/rs/zerolog/pkgerrors"
-	"Libraries/libspark-msil/constants"
+	"libspark-msil/constants"
 	"fmt"
 )
 
