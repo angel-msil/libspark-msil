@@ -1,7 +1,7 @@
 package flags
 
 import (
-        "libspark-msil/constants"
+        "github.com/angel-msil/libspark-msil/constants"
 	flag "github.com/spf13/pflag"
 )
 

@@ -2,12 +2,12 @@ package kafka
 
 import (
         "fmt"
-        "libspark-msil/constants"
+        "github.com/angel-msil/libspark-msil/constants"
         "github.com/Shopify/sarama"
         log "github.com/sirupsen/logrus"
         "strings"
         "encoding/json"
-        "libspark-msil/entities"
+        "github.com/angel-msil/libspark-msil/entities"
         "time"
 )
 

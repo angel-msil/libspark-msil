@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"fmt"
 	"github.com/jackc/pgx/v4/pgxpool"
-	"libspark-msil/configs"
-	"libspark-msil/constants"
+	"github.com/angel-msil/libspark-msil/configs"
+	"github.com/angel-msil/libspark-msil/constants"
 )
 
 var dbInstance *pgxpool.Pool
