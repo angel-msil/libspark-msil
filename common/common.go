@@ -5,10 +5,10 @@ import (
 	"github.com/go-playground/validator/v10"
 	"errors"
 	"github.com/angel-msil/libspark-msil/constants"
-	"github.com/angel-msil/libspark-msil/kafka"
 	"github.com/gin-gonic/gin"
 	"log"
 	"fmt"
+	"github.com/angel-msil/libspark-msil/kafka"
 )
 
 
